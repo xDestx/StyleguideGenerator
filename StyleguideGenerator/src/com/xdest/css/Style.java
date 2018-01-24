@@ -12,6 +12,38 @@ import java.util.Map;
 public interface Style {
 
 	/**
+	 * Add a class that this style targets
+	 * 
+	 * @param s
+	 *            The class to add
+	 */
+	void addClass(String s);
+
+	/**
+	 * Set the Id that this style targets
+	 * 
+	 * @param s
+	 *            The string id
+	 */
+	void setId(String s);
+
+	/**
+	 * Add an element targeted by this style
+	 * 
+	 * @param s
+	 *            The element to add
+	 */
+	void addElement(String s);
+
+	/**
+	 * Set the specific target for this style
+	 * 
+	 * @param s
+	 *            The target
+	 */
+	void setSpecificTarget(String s);
+
+	/**
 	 * Get the specific target for this style
 	 * 
 	 * @return The target as a String of classes, elements, and ids
