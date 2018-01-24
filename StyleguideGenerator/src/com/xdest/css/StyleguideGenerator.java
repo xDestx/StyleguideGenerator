@@ -1,7 +1,15 @@
 package com.xdest.css;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+import org.w3c.css.sac.InputSource;
+import org.w3c.dom.css.CSSStyleSheet;
+
+import com.steadystate.css.parser.CSSOMParser;
 import com.xdest.css.guide.GuideOption;
 
 /**
@@ -80,8 +88,24 @@ public class StyleguideGenerator {
 	 */
 	public static Stylesheet createStylesheet(File f) {
 		// TODO this
-
+		CSSOMParser cp = new CSSOMParser();
+		InputSource is;
+		try {
+			is = new InputSource(new InputStreamReader(new FileInputStream(f)));
+			CSSStyleSheet css = cp.parseStyleSheet(is, null, "");
+			return parseSheet(css);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
+	}
+	
+	protected static Stylesheet parseSheet(CSSStyleSheet css) {
+		Stylesheet newSheet = new CascadingStyleSheet();
+		
+		return newSheet;
 	}
 
 	/**
