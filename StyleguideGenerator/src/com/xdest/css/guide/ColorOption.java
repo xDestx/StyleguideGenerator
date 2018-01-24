@@ -1,6 +1,7 @@
 package com.xdest.css.guide;
 
 import java.awt.Color;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ColorOption extends GuideOption {
 	public boolean acceptStyle(Style style) {
 		boolean accept = false;
 		//Check for any matching attributes
-		outer:for(String s : style.getAttributeMap().values()) {
+		outer:for(String s : style.getAttributeMap().keySet()) {
 			for(String acceptedAttribute : acceptedAttributes) {
 				if(s.equalsIgnoreCase(acceptedAttribute)) {
 					accept = true;
@@ -42,6 +43,8 @@ public class ColorOption extends GuideOption {
 		for(String a : acceptedAttributes) {
 			if(style.getAttributeValue(a) != null) {
 				String value = style.getAttributeValue(a).trim();
+				if(value.equalsIgnoreCase("transparent")) continue;
+				if(value.equalsIgnoreCase("grey")) value = "gray";
 				Color newColor = parseColor(value);
 				newColors.add(newColor);
 			}
@@ -83,7 +86,7 @@ public class ColorOption extends GuideOption {
 			int length = s.length();
 			//Should be 3 or 6
 			if(length != 3 && length != 6) {
-				System.out.println("Invalid color lenght");
+				System.out.println("Invalid color length");
 				return null;
 			}
 			if(length == 3) {
@@ -105,7 +108,6 @@ public class ColorOption extends GuideOption {
 		} else if (s.contains("rgba")) {
 			s = s.replace("(", "").replace(")","").replace(" ", "").replace("rgba","");
 			String[] vals = s.split(",");
-			//Ignore a
 			int[] rgb = new int[3];
 			for(int i = 0; i < 3; i++) {
 				int x = Integer.parseInt(vals[i]);
@@ -125,8 +127,16 @@ public class ColorOption extends GuideOption {
 			Color newColor = new Color(rgb[0],rgb[1],rgb[2]);
 			return newColor;
 		} else {
-			//Whoops, unsupported 
-			return null;
+			//Maybe color by name?
+			Color color;
+			try {
+			    Field field = Class.forName("java.awt.Color").getField(s);
+			    color = (Color)field.get(null);
+			} catch (Exception e) {
+			    color = null; // Not defined
+			    //lame
+			}
+			return color;
 		}
 	}
 	
