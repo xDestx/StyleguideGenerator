@@ -90,7 +90,6 @@ public class StyleguideGenerator {
 	 * @return A stylesheet instance
 	 */
 	public static Stylesheet createStylesheet(File f) {
-		// TODO this
 		CSSOMParser cp = new CSSOMParser();
 		InputSource is;
 		try {
