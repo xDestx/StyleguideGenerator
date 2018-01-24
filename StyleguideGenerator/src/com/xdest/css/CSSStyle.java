@@ -15,8 +15,10 @@ public class CSSStyle implements Style {
 	private Collection<String> elements, classes;
 	private Map<String, String> attributes;
 	private String id, target;
+	private Stylesheet parent;
 
-	public CSSStyle() {
+	public CSSStyle(Stylesheet parent) {
+		this.parent = parent;
 		elements = new ArrayList<String>();
 		classes = new ArrayList<String>();
 		attributes = new HashMap<String, String>();
@@ -46,7 +48,9 @@ public class CSSStyle implements Style {
 
 	@Override
 	public String getName() {
-		return "CLASS NAME HERE (TBD)";
+		String text = "";
+		text+="Target: " + this.target;
+		return text;
 	}
 
 	@Override
@@ -100,6 +104,11 @@ public class CSSStyle implements Style {
 		str+="}\n";
 		
 		return str;
+	}
+
+	@Override
+	public Stylesheet[] getParentSheets() {
+		return new Stylesheet[] {parent};
 	}
 
 }

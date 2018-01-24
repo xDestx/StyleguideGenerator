@@ -79,7 +79,7 @@ public class ColorOption extends GuideOption {
 	 * @param s The color string
 	 * @return A color if it can be determined, or null
 	 */
-	protected Color parseColor(String s) {
+	public static Color parseColor(String s) {
 		if(s.contains("#")) {
 			s = s.replace("#", "");
 			s = s.trim();

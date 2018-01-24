@@ -113,4 +113,9 @@ public interface Style {
 	 */
 	boolean hasAttribute(String key);
 
+	/**
+	 * Get the style sheets this style belongs to, if they exist
+	 * @return Stylesheets, if they exist
+	 */
+	Stylesheet[] getParentSheets();
 }

@@ -14,6 +14,7 @@ import org.w3c.dom.css.CSSStyleSheet;
 import com.steadystate.css.parser.CSSOMParser;
 import com.xdest.css.guide.ColorOption;
 import com.xdest.css.guide.GuideOption;
+import com.xdest.css.guide.TypographyOption;
 
 /**
  * The main class in the Styleguide Generator project.
@@ -54,7 +55,7 @@ public class StyleguideGenerator {
 		String html = "<!DOCTYPE html>\n<html>";
 		html += "\t<head>\n";
 		html += "\t\t<title>Generated Styleguide</title>\n";
-		html += "\t\t<style>* {font-family:\"Arial\";color:#42bcf4;margin:2px;}h1 {margin:20px;}</style>\n";
+		html += "\t\t<style>* {font-family:\"Arial\";margin:2px;}h1 {margin:20px; color:#42bcf4}h4 {margin:0px 0px 10px 20px;color:#42bcf4;}</style>\n";
 		html += "\t</head>\n\t<body>\n";
 		// Populate options with their specific styles
 		for (GuideOption option : options) {
@@ -79,7 +80,7 @@ public class StyleguideGenerator {
 	 */
 	public static GuideOption[] getOptions() {
 		// TODO this
-		return new GuideOption[] {new ColorOption()};
+		return new GuideOption[] {new ColorOption(), new TypographyOption()};
 	}
 
 	/**
@@ -118,7 +119,7 @@ public class StyleguideGenerator {
 				possibleMultiple[k] = cleanString(possibleMultiple[k]);
 			}
 			for(String s : possibleMultiple) {
-				newSheet.addStyle(parseStyle(s));
+				newSheet.addStyle(parseStyle(s, newSheet));
 			}
 			
 		}
@@ -152,8 +153,8 @@ public class StyleguideGenerator {
 	}
 	
 	
-	protected static Style parseStyle(String style) {
-		Style newStyle = new CSSStyle();
+	protected static Style parseStyle(String style, Stylesheet parent) {
+		Style newStyle = new CSSStyle(parent);
 		//Set specific target
 		newStyle.setSpecificTarget(style.substring(0, style.indexOf('{')));
 		//Find classes
