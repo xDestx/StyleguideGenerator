@@ -51,7 +51,7 @@ public class TypographyOption extends GuideOption {
 		String html= "";
 		html+="<h1>Typography</h1><h4>Using body color as default. Backgrounds are added to fonts with color too close to white</h4><hr/>\n";
 		for(CFont f : fonts) {
-			html+="<div style=\"padding:8px;border-top:1px solid black;";
+			html+="<div style=\"padding:8px;border-bottom:1px solid black;";
 			boolean containsColor = false;
 			for(String s : f.getFontMap().keySet()) {
 				html+=s + ":" + f.getValue(s).replace("\"", "'") + ";";
